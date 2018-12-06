@@ -1,0 +1,68 @@
+package day3_secondHalf;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Map.Entry;
+
+public class ValueBasedSortingOfHashMap {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		HashMap<String, Integer> map=new HashMap<>();
+		map.put("a", 3);
+		map.put("b", 2);
+		map.put("c", 5);
+		map.put("d", 1);
+		map.put("e", 4);
+		
+		Set<Map.Entry<String,Integer>> entry=map.entrySet();
+		Iterator<Map.Entry<String,Integer>> itr =entry.iterator();
+		while(itr.hasNext()) {
+			Entry<String, Integer> e=itr.next();
+			System.out.println(e.getKey()+":::"+e.getValue());
+		}
+		
+		Map<String, Integer> mapafter=sortHashMapByValue(map);
+		Set<Map.Entry<String,Integer>> entryafter=mapafter.entrySet();
+		Iterator<Map.Entry<String,Integer>> itrafter =entryafter.iterator();
+		while(itrafter.hasNext()) {
+			Entry<String, Integer> e=itrafter.next();
+			System.out.println(e.getKey()+":::"+e.getValue());
+		}
+
+	}
+
+	private static Map<String,Integer> sortHashMapByValue(HashMap<String, Integer> map) {
+		
+		List<Map.Entry<String,Integer>> list=new ArrayList<>(map.entrySet());
+		System.out.println("list before::"+list);
+		
+		Collections.sort(list, new Comparator<Map.Entry<String,Integer>>() {
+
+			@Override
+			public int compare(Entry<String, Integer> o1, Entry<String, Integer> o2) {
+				// TODO Auto-generated method stub
+				return o1.getValue()-o2.getValue();
+			}
+			
+		});
+		
+		System.out.println("list after::"+list);
+		
+		Map<String, Integer> linkMap=new LinkedHashMap<>();
+		for(Map.Entry<String,Integer> m: list) {
+			linkMap.put(m.getKey(), m.getValue());			
+		}
+		return linkMap;		
+		
+	}
+
+}
